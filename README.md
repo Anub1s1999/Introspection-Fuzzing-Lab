@@ -51,5 +51,6 @@ We rebuild the target with `--coverage` (gcov), run the fuzzer-generated corpus,
 The AFL++ source is included as a Git submodule (to keep the main repo lightweight):
 
 ```bash
-git clone --recursive https://github.com/yourusername/vulnerability-research-pipeline.git
-cd vulnerability-research-pipeline
+git clone --recursive https://github.com/Anub1s1999/Introspection-Fuzzing-Lab.git
+cd Introspection-Fuzzing-Lab
+
