@@ -51,7 +51,7 @@ We rebuild the target with `--coverage` (gcov), run the fuzzer-generated corpus,
 The AFL++ source is included as a Git submodule (to keep the main repo lightweight):
 
 ```bash
-git clone https://github.com/yourusername/Introspection-Fuzzing-Lab.git
+https://github.com/Anub1s1999/Introspection-Fuzzing-Lab.git
 cd Introspection-Fuzzing-Lab
 
 ```
