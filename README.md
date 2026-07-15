@@ -53,4 +53,102 @@ The AFL++ source is included as a Git submodule (to keep the main repo lightweig
 ```bash
 git clone --recursive https://github.com/Anub1s1999/Introspection-Fuzzing-Lab.git
 cd Introspection-Fuzzing-Lab
+```
 
+If you cloned without `--recursive`, run:
+
+```bash
+git submodule update --init --recursive
+```
+### 2. Build the Docker Container
+
+The container includes all tools: `Clang/LLVM 14`, `XRay`, `lizard`, `FlameGraph`, `AFL++`, `gcov/lcov`, and `GCC 12`.
+
+```bash
+docker build -t fuzzing-lab .
+```
+This will take few minutes (depends on your network speed). Once finished, verify:
+
+```bash
+docker run --rm fuzzing-lab clang --version
+```
+### 3. Run the Container with Volume Mount
+
+All results generated inside the container will be saved to your host's `./results` folder.
+
+```bash
+docker run -it --rm -v $(pwd)/results:/workspace/results fuzzing-lab
+```
+
+## 🖥️ Environment Setup: Kali Linux + VSCode Remote
+
+This project is designed to run inside a Docker container. However, to edit files, run commands, and debug interactively, we strongly recommend using **Visual Studio Code** connected to your Kali Linux VM via **Remote - SSH**.
+
+This setup mirrors a professional workflow where the analysis environment (Kali) is isolated from your daily driver (Windows/macOS).
+
+### 1. VirtualBox Network Configuration
+
+Ensure your Kali VM can communicate with your host machine.
+
+- Open **VirtualBox** → Select your Kali VM → **Settings** → **Network**.
+- Set **Adapter 1** to **Bridged Adapter** (or **Host-Only + NAT**).
+- Start your Kali VM.
+
+### 2. Install and Start the SSH Server on Kali
+
+Open a terminal inside your Kali VM and run:
+
+```bash
+sudo apt update
+sudo apt install openssh-server -y
+sudo systemctl enable ssh
+sudo systemctl start ssh
+sudo systemctl status ssh   # Verify it shows "active (running)"
+```
+
+### 3. Install the "Remote - SSH" Extension in VSCode
+Open Visual Studio Code on your host machine (Windows/macOS/Linux).
+
+Click the Extensions icon (Ctrl+Shift+X) on the left sidebar.
+
+Search for "Remote - SSH" (by Microsoft).
+
+Click Install.
+
+### 4. Connect VSCode to Kali
+Press F1 (or Ctrl+Shift+P) to open the command palette.
+
+Type Remote-SSH: Connect to Host... and select it.
+
+Enter: kali@<YOUR_KALI_IP> (e.g., kali@<IP>>).
+
+Select the default SSH configuration file (or press Enter to skip).
+
+When prompted, enter your Kali user password.
+
+VSCode will open a new window. Look for the green indicator in the bottom-left corner showing SSH: 192.168.1.7.
+
+### Troubleshooting: If you receive a "Bad configuration option" error, check your Windows SSH config file at C:\Users\<YourUser>\.ssh\config. Ensure there is no invalid Password line. A minimal working config looks like:
+```bash
+Host kali-vm
+    HostName 192.168.1.7
+    User kali
+```
+
+### 5. Verify Docker Access from VSCode
+Once connected, open a terminal inside VSCode (Terminal → New Terminal). You are now directly shelled into Kali.
+
+Verify Docker is installed and accessible:
+
+```bash
+docker --version
+```
+
+If Docker is not installed, install it:
+
+```bash
+sudo apt install docker.io -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker $USER
+```
