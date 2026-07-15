@@ -51,14 +51,9 @@ We rebuild the target with `--coverage` (gcov), run the fuzzer-generated corpus,
 The AFL++ source is included as a Git submodule (to keep the main repo lightweight):
 
 ```bash
-git clone --recursive https://github.com/Anub1s1999/Introspection-Fuzzing-Lab.git
+git clone https://github.com/yourusername/Introspection-Fuzzing-Lab.git
 cd Introspection-Fuzzing-Lab
-```
 
-If you cloned without `--recursive`, run:
-
-```bash
-git submodule update --init --recursive
 ```
 ### 2. Build the Docker Container
 
@@ -93,7 +88,6 @@ Ensure your Kali VM can communicate with your host machine.
 - Open **VirtualBox** → Select your Kali VM → **Settings** → **Network**.
 - Set **Adapter 1** to **Bridged Adapter** (or **Host-Only + NAT**).
 - Start your Kali VM.
-
 ### 2. Install and Start the SSH Server on Kali
 
 Open a terminal inside your Kali VM and run:
@@ -105,7 +99,6 @@ sudo systemctl enable ssh
 sudo systemctl start ssh
 sudo systemctl status ssh   # Verify it shows "active (running)"
 ```
-
 ### 3. Install the "Remote - SSH" Extension in VSCode
 Open Visual Studio Code on your host machine (Windows/macOS/Linux).
 
@@ -114,7 +107,6 @@ Click the Extensions icon (Ctrl+Shift+X) on the left sidebar.
 Search for "Remote - SSH" (by Microsoft).
 
 Click Install.
-
 ### 4. Connect VSCode to Kali
 Press F1 (or Ctrl+Shift+P) to open the command palette.
 

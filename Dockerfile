@@ -58,8 +58,8 @@ RUN apt-get update && apt-get install -y flex bison && rm -rf /var/lib/apt/lists
 # 7. Install lizard (modern cyclomatic complexity analyzer)
 RUN pip3 install lizard
 # 8. Install AFL++ 
-COPY AFLplusplus /opt/AFLplusplus
-RUN cd /opt/AFLplusplus && make && make install
+RUN git clone --depth 1 https://github.com/AFLplusplus/AFLplusplus.git /opt/AFLplusplus && \
+    cd /opt/AFLplusplus && make && make install
 
 # 9. Install Flame Graph script
 RUN git clone https://github.com/brendangregg/FlameGraph.git /opt/FlameGraph
